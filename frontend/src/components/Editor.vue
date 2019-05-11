@@ -4,25 +4,43 @@
     <div>
       <canvas id="test" width=1200 height=630></canvas>
     </div>
+    <button type="button" @click="sendImage">send</button>
+    <div v-if="filename">
+      <a :href="`/debug-shrine/us-central1/api/fetch/${filename}`">Open</a>
+    </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 const OGP_IMG_WIDTH = 1200
 const OGP_IMG_HEIGHT = 630
 const GLITCH_AMOUNT = 4
 const FONT_SIZE = 160
 
+function canvasToBlob (canvas) {
+  const type = 'image/png';
+  const dataurl = canvas.toDataURL(type);
+  const bin = atob(dataurl.split(',')[1]);
+  const buffer = new Uint8Array(bin.length);
+  for (var i = 0; i < bin.length; i++) {
+    buffer[i] = bin.charCodeAt(i);
+  }
+  return new Blob([buffer.buffer], {type: type});
+}
+
 export default {
   data () {
     return {
       text: 'うどん',
-      context: null,
+      canvas: null,
+      filename: null,
     }
   },
   methods: {
     drawText () {
-      const ctx = this.context
+      const ctx = this.canvas.getContext("2d")
       ctx.fillStyle = "rgb(0,0,0)"
       ctx.fillRect(0, 0, OGP_IMG_WIDTH, OGP_IMG_HEIGHT)
 
@@ -57,6 +75,24 @@ export default {
         ctx.putImageData(slide, slideX, offsetY)
       }
     },
+    sendImage() {
+      const blob = canvasToBlob(this.canvas)
+
+      const formData = new FormData()
+      formData.append('img', blob)
+
+      axios.post('/debug-shrine/us-central1/api/upload_image', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(res => {
+        alert('ok')
+        console.log(res)
+        this.filename = res.data.filename
+      }).catch(err => {
+        console.log(err)
+      })
+    }
   },
   watch: {
     text (val) {
@@ -64,8 +100,7 @@ export default {
     }
   },
   mounted () {
-    const testCanvas = document.getElementById("test")
-    this.context = testCanvas.getContext("2d")
+    this.canvas = document.getElementById("test")
     this.drawText()
   }
 }

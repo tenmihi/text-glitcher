@@ -3,7 +3,7 @@ const serviceAccount = require("../firebase-key.json")
 
 firebaseAdmin.initializeApp({
   credential: firebaseAdmin.credential.cert(serviceAccount),
-  storageBucket: "debug-shrine.appspot.com"
+  storageBucket: "textglitcher.appspot.com"
 })
 
 export default firebaseAdmin;

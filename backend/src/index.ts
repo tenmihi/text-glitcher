@@ -1,7 +1,11 @@
-import generateImage from './generate-image'
+import uploadImage from './upload-image'
 import renderHtml from './render-html'
+import * as functions from "firebase-functions"
+import * as express from "express"
 
-const functions = require('firebase-functions')
+const app = express()
 
-exports.generate_image = functions.https.onRequest(generateImage)
-exports.fetch_ogp = functions.https.onRequest(renderHtml)
+app.post('/upload_image', uploadImage)
+app.get('/fetch/:id', renderHtml)
+
+exports.api = functions.https.onRequest(app)

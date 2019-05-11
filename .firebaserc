@@ -1,5 +1,6 @@
 {
   "projects": {
-    "debug-shrine": "debug-shrine"
+    "debug-shrine": "debug-shrine",
+    "prod": "textglitcher"
   }
 }
