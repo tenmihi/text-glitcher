@@ -7,7 +7,7 @@ import GlitchCanvas from './components/GlitchCanvas'
 import TextInput from './components/TextInput'
 import Button from '@material-ui/core/Button'
 
-import { canvasToBlob } from './utils/canvas.js'
+import { canvasToBlob } from './utils/canvas.js.js'
 
 const styles = theme => ({
   root: {
