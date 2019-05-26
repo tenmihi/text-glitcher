@@ -67,6 +67,7 @@ node_modules/
 # Compiled JavaScript files
 backend/**/*.js
 backend/**/*.js.map
+frontend/build
 
 # Typescript v1 declaration files
 typings/

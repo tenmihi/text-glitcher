@@ -7,7 +7,7 @@ import GlitchCanvas from './components/GlitchCanvas'
 import TextInput from './components/TextInput'
 import Button from '@material-ui/core/Button'
 
-import { canvasToBlob } from './utils/canvas.js.js'
+import { canvasToBlob } from './utils/canvas.js'
 
 const styles = theme => ({
   root: {
@@ -42,7 +42,10 @@ const styles = theme => ({
   },
 });
 
+const FUNC_URL = 'https://asia-northeast1-textglitcher.cloudfunctions.net/api'
+
 class App extends React.Component {
+
   state = {
     text: 'Glitch',
     canvas: null,
@@ -68,7 +71,7 @@ class App extends React.Component {
     if (!filename) return
 
     const link = document.createElement("a")
-    const ogp_image_link = `${encodeURI(filename)}`
+    const ogp_image_link = `${window.location.protocol}//${window.location.host}/api/fetch/${encodeURI(filename)}`
     link.href=`https://twitter.com/intent/tweet?text=${ogp_image_link}`
     link.click()
   }
