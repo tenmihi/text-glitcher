@@ -4,14 +4,6 @@ import * as Busboy from 'busboy'
 import { Request, Response } from 'express'
 
 export default function (req: Request, res: Response) {
-  // CORS
-  if (req.method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    res.header('Access-Control-Allow-Methods', 'POST');
-    res.status(200).end();
-    return;
-  }
 
   const busboy = new Busboy({ headers: req.headers });
   const allowMimeTypes = ['image/png'];

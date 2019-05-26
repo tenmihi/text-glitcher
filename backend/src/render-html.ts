@@ -1,11 +1,8 @@
 import firebase from './firebase-admin'
 import { Request, Response } from 'express'
 
-const SITEURL = 'http://localhost:8000' // `https://${CONFIG.app.domain}`
+const SITEURL = 'https://text-glitcher.tenmihi.dev'
 const DESCRIPTION = 'description here'
-
-const OGP_IMG_WIDTH = 1200
-const OGP_IMG_HEIGHT = 630
 
 export default async function (req: Request, res: Response) {
   if (req.method !== 'GET') {
@@ -36,33 +33,28 @@ export default async function (req: Request, res: Response) {
 
 const buildHtml = (imageUrl: string) => {
   const PAGEURL = `${SITEURL}`
-  const TITLE = "HOGEHOGE"
+  const TITLE = "Text Glitcher"
   return `
     <!DOCTYPE html>
     <html>
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
-        <title>colorinco</title>
+        <title>Text Glitcher</title>
         <meta property="og:title" content="${TITLE}">
         <meta property="og:image" content="${imageUrl}">
-        <meta property="og:image:width" content="${OGP_IMG_WIDTH}">
-        <meta property="og:image:height" content="${OGP_IMG_HEIGHT}">
         <meta property="og:description" content="${DESCRIPTION}">
         <meta property="og:url" content="${PAGEURL}">
-        <meta property="og:type" content="article">
         <meta property="og:site_name" content="Text Glitcher">
         <meta name="twitter:site" content="${SITEURL}">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="${TITLE}">
-        <meta name="twitter:image" content="${SITEURL}/ogp/stockimg">
-        <meta name="twitter:description" content="グリッチエフェクトのかかった文字列を作れます">
+        <meta name="twitter:description" content="グリッチエフェクトのかかった文字画像を作れます">
       </head>
       <body>
-        
+        <script type="text/javascript">window.location="${SITEURL}";</script>
       </body>
     </html>
     `
 }
 
-// <script type="text/javascript">window.location="/_stock/";</script>
